@@ -1,5 +1,5 @@
 import nodemailer from 'nodemailer';
-
+// MSB Report Email Function
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
