@@ -226,7 +226,7 @@ const App = () => {
           console.log('Submitting to serverless function...');
           
           // Send to our API endpoint - CORRECTED PATH
-          const response = await fetch('/api2/submit-report', {
+          const response = await fetch('/api/submit-report', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
