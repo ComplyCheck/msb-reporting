@@ -29,7 +29,7 @@ export default async function handler(req, res) {
       }
     });
 
-// Format email content with clean tables
+// Format email content - clean and simple
     const formatCurrency = (amount) => {
       const num = parseFloat(amount) || 0;
       return new Intl.NumberFormat('en-US', {
@@ -44,10 +44,9 @@ export default async function handler(req, res) {
 
     let emailContent = `
 FLORIDA MSB QUARTERLY REPORT SUBMISSION
-========================================
+=====================================
 
 COMPANY INFORMATION:
--------------------
 Legal Name:     ${company_name}
 DBA:           ${dba_name}
 Contact:       ${contact_person}
@@ -58,7 +57,7 @@ Submitted:     ${submission_date} at ${submission_time}
 
 `;
 
-    // Add Check Cashing table if present
+    // Add Check Cashing data if present
     if (report_data.checkCashingData) {
       const checkData = report_data.checkCashingData;
       
@@ -91,17 +90,34 @@ Submitted:     ${submission_date} at ${submission_time}
 CHECK CASHING ACTIVITY:
 ======================
 
-| Metric              | Month 1      | Month 2      | Month 3      | Quarter Total |
-|---------------------|--------------|--------------|--------------|---------------|
-| Instruments Cashed  | ${formatNumber(checkData.month1.instruments).padEnd(12)} | ${formatNumber(checkData.month2.instruments).padEnd(12)} | ${formatNumber(checkData.month3.instruments).padEnd(12)} | ${totalInstruments.padEnd(13)} |
-| Face Amount         | ${formatCurrency(checkData.month1.faceAmount).padEnd(12)} | ${formatCurrency(checkData.month2.faceAmount).padEnd(12)} | ${formatCurrency(checkData.month3.faceAmount).padEnd(12)} | ${totalFaceAmount.padEnd(13)} |
-| Cashing Fees        | ${formatCurrency(checkData.month1.fees).padEnd(12)} | ${formatCurrency(checkData.month2.fees).padEnd(12)} | ${formatCurrency(checkData.month3.fees).padEnd(12)} | ${totalFees.padEnd(13)} |
-| Verification Fees   | ${formatCurrency(checkData.month1.verificationFees).padEnd(12)} | ${formatCurrency(checkData.month2.verificationFees).padEnd(12)} | ${formatCurrency(checkData.month3.verificationFees).padEnd(12)} | ${totalVerifyFees.padEnd(13)} |
+INSTRUMENTS CASHED:
+  Month 1: ${formatNumber(checkData.month1.instruments)}
+  Month 2: ${formatNumber(checkData.month2.instruments)}
+  Month 3: ${formatNumber(checkData.month3.instruments)}
+  QUARTER TOTAL: ${totalInstruments}
+
+FACE AMOUNT OF INSTRUMENTS:
+  Month 1: ${formatCurrency(checkData.month1.faceAmount)}
+  Month 2: ${formatCurrency(checkData.month2.faceAmount)}
+  Month 3: ${formatCurrency(checkData.month3.faceAmount)}
+  QUARTER TOTAL: ${totalFaceAmount}
+
+CHECK CASHING FEES COLLECTED:
+  Month 1: ${formatCurrency(checkData.month1.fees)}
+  Month 2: ${formatCurrency(checkData.month2.fees)}
+  Month 3: ${formatCurrency(checkData.month3.fees)}
+  QUARTER TOTAL: ${totalFees}
+
+VERIFICATION FEES COLLECTED:
+  Month 1: ${formatCurrency(checkData.month1.verificationFees)}
+  Month 2: ${formatCurrency(checkData.month2.verificationFees)}
+  Month 3: ${formatCurrency(checkData.month3.verificationFees)}
+  QUARTER TOTAL: ${totalVerifyFees}
 
 `;
     }
 
-    // Add Deferred Presentment table if present
+    // Add Deferred Presentment data if present
     if (report_data.deferredPresentmentData) {
       const deferredData = report_data.deferredPresentmentData;
       
@@ -134,12 +150,29 @@ CHECK CASHING ACTIVITY:
 DEFERRED PRESENTMENT (PAYDAY LOANS) ACTIVITY:
 ============================================
 
-| Metric              | Month 1      | Month 2      | Month 3      | Quarter Total |
-|---------------------|--------------|--------------|--------------|---------------|
-| Transactions        | ${formatNumber(deferredData.month1.transactions).padEnd(12)} | ${formatNumber(deferredData.month2.transactions).padEnd(12)} | ${formatNumber(deferredData.month3.transactions).padEnd(12)} | ${totalTransactions.padEnd(13)} |
-| Transaction Amount  | ${formatCurrency(deferredData.month1.amount).padEnd(12)} | ${formatCurrency(deferredData.month2.amount).padEnd(12)} | ${formatCurrency(deferredData.month3.amount).padEnd(12)} | ${totalAmount.padEnd(13)} |
-| Service Fees        | ${formatCurrency(deferredData.month1.serviceFees).padEnd(12)} | ${formatCurrency(deferredData.month2.serviceFees).padEnd(12)} | ${formatCurrency(deferredData.month3.serviceFees).padEnd(12)} | ${totalServiceFees.padEnd(13)} |
-| Verification Fees   | ${formatCurrency(deferredData.month1.verificationFees).padEnd(12)} | ${formatCurrency(deferredData.month2.verificationFees).padEnd(12)} | ${formatCurrency(deferredData.month3.verificationFees).padEnd(12)} | ${totalVerifyFees.padEnd(13)} |
+NUMBER OF TRANSACTIONS:
+  Month 1: ${formatNumber(deferredData.month1.transactions)}
+  Month 2: ${formatNumber(deferredData.month2.transactions)}
+  Month 3: ${formatNumber(deferredData.month3.transactions)}
+  QUARTER TOTAL: ${totalTransactions}
+
+DOLLAR AMOUNT OF TRANSACTIONS:
+  Month 1: ${formatCurrency(deferredData.month1.amount)}
+  Month 2: ${formatCurrency(deferredData.month2.amount)}
+  Month 3: ${formatCurrency(deferredData.month3.amount)}
+  QUARTER TOTAL: ${totalAmount}
+
+SERVICE FEES COLLECTED:
+  Month 1: ${formatCurrency(deferredData.month1.serviceFees)}
+  Month 2: ${formatCurrency(deferredData.month2.serviceFees)}
+  Month 3: ${formatCurrency(deferredData.month3.serviceFees)}
+  QUARTER TOTAL: ${totalServiceFees}
+
+VERIFICATION FEES COLLECTED:
+  Month 1: ${formatCurrency(deferredData.month1.verificationFees)}
+  Month 2: ${formatCurrency(deferredData.month2.verificationFees)}
+  Month 3: ${formatCurrency(deferredData.month3.verificationFees)}
+  QUARTER TOTAL: ${totalVerifyFees}
 
 `;
     }
@@ -151,10 +184,10 @@ Submission ID:   ${report_data.submissionTimestamp}
 Status:          ${report_data.status}
 Amendment:       ${report_data.reportDetails.isAmendment ? 'YES - This is an amended report' : 'NO - Original filing'}
 
-========================================
+=====================================
 This report was automatically submitted via the ComplyCheck MSB Quarterly Reporting Tool.
 For questions about this submission, contact ${contact_person}.
-========================================
+=====================================
     `;
     // Send email
     await transporter.sendMail({
