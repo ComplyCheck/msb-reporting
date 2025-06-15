@@ -258,7 +258,7 @@ const App = () => {
           console.error('Submission error:', error);
           setSubmissionComplete('error');
         }
-        
+      };   
 
       // Calculate totals for review
       const calculateTotals = (data, fields) => {
@@ -326,7 +326,7 @@ const App = () => {
             <div className="bg-yellow-50 p-6 rounded-lg border border-yellow-200">
               <h3 className="font-semibold text-yellow-800 mb-2">📧 Manual Process Required:</h3>
               <ul className="text-yellow-700 space-y-1 text-sm">
-                <li>• Please contact ComplyCheck for assistance.</li>
+                <li>• Please contact ComplyCheck at requests@complycheck.co for assistance.</li>
               </ul>
             </div>
             <div className="flex space-x-4">
@@ -336,6 +336,7 @@ const App = () => {
           </div>
         );
       }
+    };
 
       return (
         <div className="space-y-6">
@@ -445,7 +446,6 @@ const App = () => {
               <li>• Verify all data is accurate for the entire quarter</li>
               <li>• Ensure you have supporting documentation</li>
               <li>• Remember that false information may result in penalties</li>
-              <li>• A copy of your report will be downloaded for your records</li>
             </ul>
           </div>
 
