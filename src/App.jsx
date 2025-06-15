@@ -225,7 +225,7 @@ const App = () => {
         try {
           console.log('Submitting to serverless function...');
           
-          // Send to our API endpoint - CORRECTED PATH
+          // Send to our API endpoint
           const response = await fetch('/api/submit-report', {
             method: 'POST',
             headers: {
@@ -258,7 +258,7 @@ const App = () => {
           console.error('Submission error:', error);
           setSubmissionComplete('error');
         }
-      };   
+      };
 
       // Calculate totals for review
       const calculateTotals = (data, fields) => {
@@ -336,7 +336,6 @@ const App = () => {
           </div>
         );
       }
-    };
 
       return (
         <div className="space-y-6">
@@ -458,7 +457,6 @@ const App = () => {
         </div>
       );
     }
-
     return <div>Step {currentStep} not found</div>;
   };
 
