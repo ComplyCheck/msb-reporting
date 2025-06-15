@@ -259,19 +259,6 @@ const App = () => {
           setSubmissionComplete('error');
         }
         
-        // Always download backup copy
-        console.log('Downloading backup file...');
-        const blob = new Blob([JSON.stringify(report, null, 2)], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `MSB_Report_${formData.quarter}_${formData.year}_${formData.legalName.replace(/\s+/g, '_')}${formData.isAmendment ? '_AMENDMENT' : ''}.json`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-        console.log('Backup file downloaded');
-      };
 
       // Calculate totals for review
       const calculateTotals = (data, fields) => {
@@ -310,7 +297,7 @@ const App = () => {
             <div className="text-center">
               <CheckCircle className="w-16 h-16 text-green-600 mx-auto mb-4" />
               <h2 className="text-2xl font-bold text-gray-800 mb-2">Submission Successful!</h2>
-              <p className="text-gray-600">Your report has been submitted to ComplyCheck and a backup copy downloaded.</p>
+              <p className="text-gray-600">Your report has been submitted to ComplyCheck.</p>
             </div>
             <div className="bg-green-50 p-6 rounded-lg">
               <h3 className="font-semibold text-green-800 mb-2">✅ What Just Happened:</h3>
@@ -318,7 +305,6 @@ const App = () => {
                 <li>• Your report was automatically sent to ComplyCheck</li>
                 <li>• ComplyCheck has been notified via email</li>
                 <li>• Your data has been processed successfully</li>
-                <li>• A backup copy was downloaded to your device</li>
                 <li>• Processing will begin within 1 business day</li>
               </ul>
             </div>
@@ -335,15 +321,12 @@ const App = () => {
                 <span className="text-red-600 text-2xl">⚠️</span>
               </div>
               <h2 className="text-2xl font-bold text-gray-800 mb-2">Submission Issue</h2>
-              <p className="text-gray-600">There was an issue with automatic submission, but your backup file was downloaded.</p>
+              <p className="text-gray-600">There was an issue with automatic submission.</p>
             </div>
             <div className="bg-yellow-50 p-6 rounded-lg border border-yellow-200">
               <h3 className="font-semibold text-yellow-800 mb-2">📧 Manual Process Required:</h3>
               <ul className="text-yellow-700 space-y-1 text-sm">
-                <li>• Your report file was downloaded to your device</li>
-                <li>• Please email the file to: <strong>phil@complycheck.co, luis@complycheck.co</strong></li>
-                <li>• Include "MSB Quarterly Report" in the subject line</li>
-                <li>• ComplyCheck will process your report manually</li>
+                <li>• Please contact ComplyCheck for assistance.</li>
               </ul>
             </div>
             <div className="flex space-x-4">
